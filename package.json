@@ -1,0 +1,35 @@
+{
+  "name": "grunt-mermaid",
+  "version": "0.9.0",
+  "description": "Grunt plugin to generate diagram images from files based on mermaid syntax",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jballe/grunt-mermaid.git"
+  },
+  "keywords": [
+    "grunt",
+    "mermaid",
+    "diagram"
+  ],
+  "author": "Jesper Balle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jballe/grunt-mermaid/issues"
+  },
+  "homepage": "https://github.com/jballe/grunt-mermaid#readme",
+  "dependencies": {
+    "mermaid": "^0.5.8",
+    "phantomjs": "<2.0",
+    "superspawn": "^0.1.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}

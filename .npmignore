@@ -1,0 +1,10 @@
+# Ignore files from repository
+tst/**
+sample/**
+travis.yml
+
+# Ignore generated files
+node_modules/**
+*.tgz
+sample/node_modules/**
+sample/**/*.png

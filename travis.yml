@@ -1,0 +1,16 @@
+install:
+- npm install
+
+script:
+- npm pack
+# And now test that the sample can run
+- cd sample
+- npm install
+- npm install ../grunt-mermaid-0.9.0.tgz
+- grunt
+
+deploy:
+  provider: npm
+  on:
+    branch: master
+   
