@@ -75,10 +75,10 @@ module.exports = function(grunt) {
                 try {
                     spawn(options.bin, args)
                         .catch(function(err) { gaveError(filePath, command, err); })
-                        .then(function(output) { gaveSuccess(filePath, command, output); });
+                        .then(function(output) { gaveSuccess(filePath, command, output, arguments); });
                 } catch (err) {
                     console.log(arguments);
-                    gaveError(filePath, command, err);
+                    gaveError(filePath, command, err, arguments);
                 }
 
             });
