@@ -1,9 +1,10 @@
 # Ignore files from repository
 tst/**
 sample/**
-travis.yml
+.travis.yml
 .npmignore
 .gitignore
+.bithoundrc
 *.md
 
 # Ignore generated files

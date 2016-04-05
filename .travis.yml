@@ -11,7 +11,10 @@ script:
 - cd sample
 - npm install
 - npm install ../grunt-mermaid-0.9.0.tgz
-- grunt
+- npm install grunt
+- npm install grunt-cli -g
+- grunt mermaid:default
+- grunt mermaid:other
 
 deploy:
   provider: npm

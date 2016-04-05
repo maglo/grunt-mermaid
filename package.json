@@ -26,10 +26,8 @@
   "homepage": "https://github.com/jballe/grunt-mermaid#readme",
   "dependencies": {
     "mermaid": "^0.5.8",
-    "phantomjs": "<2.0",
+    "phantomjs": "^1.9.20",
     "superspawn": "^0.1.0"
   },
-  "devDependencies": {
-    "grunt": "^0.4.5"
-  }
+  "devDependencies": {}
 }

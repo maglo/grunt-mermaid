@@ -1,0 +1,9 @@
+{
+    "dependencies": {
+        "mute": [ "phantomjs" ],
+        "unused-ignores": [ "mermaid" ]
+    },
+    "ignore": [
+        "sample/**"
+    ]
+}
