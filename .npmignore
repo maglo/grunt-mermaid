@@ -2,6 +2,9 @@
 tst/**
 sample/**
 travis.yml
+.npmignore
+.gitignore
+*.md
 
 # Ignore generated files
 node_modules/**
