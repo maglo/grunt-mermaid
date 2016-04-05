@@ -4,6 +4,7 @@ sample/**
 .travis.yml
 .npmignore
 .gitignore
+.bithoundrc
 *.md
 
 # Ignore generated files
