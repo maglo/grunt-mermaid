@@ -1,7 +1,7 @@
 # Ignore files from repository
 tst/**
 sample/**
-travis.yml
+.travis.yml
 .npmignore
 .gitignore
 *.md
