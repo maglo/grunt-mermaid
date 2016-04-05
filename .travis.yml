@@ -18,6 +18,8 @@ script:
 
 deploy:
   provider: npm
+  email: "jballe@users.noreply.github.com"
   on:
-    branch: master
+    tags: true
+    
    
