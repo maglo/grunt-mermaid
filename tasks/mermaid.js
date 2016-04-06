@@ -42,14 +42,13 @@ module.exports = function(grunt) {
         };
 
         var gaveSuccess = function(path, command, output) {
-            grunt.log.ok('Successfully generated diagram for' + path);
+            grunt.log.ok('Successfully generated diagram for ' + path);
             tick();
         };
 
         var gaveError = function(path, command, error) {
-            console.log(arguments);
-            // This error is not printed!?
-            grunt.log.errorlns('Could not generating diagram for ' + path + ' when running: ' + command + '\nDue to: ' + error);
+            grunt.log.error('Could not generate diagram for ' + path + ' when running: ' + command);
+            grunt.log.errorlns('due to: ' + error);
             tick();
         };
 
@@ -74,8 +73,9 @@ module.exports = function(grunt) {
 
                 try {
                     spawn(options.bin, args)
+                        .then(function(output) { gaveSuccess(filePath, command, output, arguments); })
                         .catch(function(err) { gaveError(filePath, command, err); })
-                        .then(function(output) { gaveSuccess(filePath, command, output, arguments); });
+                        ;
                 } catch (err) {
                     console.log(arguments);
                     gaveError(filePath, command, err, arguments);
