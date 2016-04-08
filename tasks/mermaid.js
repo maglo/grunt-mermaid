@@ -124,8 +124,7 @@ module.exports = function(grunt) {
 
         grunt.verbose.write('Using phantomjs at ' + options.phantomjs);
 		
-		var makeMermardCliArgs = function(filePath) {
-			var outputPath = fileset.dest || path.dirname(filePath);
+		var makeMermardCliArgs = function(filePath, outputPath) {
 			var width = getWidthFromFile(filePath) || options.width;
 			
 			var args = [filePath, '-o', outputPath];
@@ -140,12 +139,13 @@ module.exports = function(grunt) {
 
         this.files.forEach(function(fileset) {
             grunt.log.writeln('Processing ' + fileset.src.length + ' files.');
+        var outputPath = fileset.dest || path.dirname(filePath);
 
             total = fileset.src.length;
             completed = 0;
 
             fileset.src.forEach(function(filePath) {
-				var args = makeMermardCliArgs(filePath);
+				var args = makeMermardCliArgs(filePath, outputPath);
                 var command = [options.bin].concat(args).join(' ');
                 grunt.verbose.ok('Running ' + command);
 
