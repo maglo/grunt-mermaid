@@ -10,16 +10,12 @@ module.exports = function(grunt) {
         var LineReader = require('../util/linereader.js');
 
         var options = this.options({
-            extension: '.mmd',
-            src: null,
-            dest: null,
-            cwd: null,
             png: true,
             svg: false,
             phantomjs: phantomjs.path,
             css: null,
-            verbose: false,
             bin: null,
+            width: null,
             widthText: '%% width:'
         });
 
@@ -80,6 +76,10 @@ module.exports = function(grunt) {
         grunt.verbose.ok('Found mermaid ' + options.bin);
 
         var getWidthFromFile = function(filePath) {
+            if(!options.widthText) {
+                return false;
+            }
+            
             try {
                 var reader = new LineReader(filePath);
                 var firstLine = reader.next().toString();

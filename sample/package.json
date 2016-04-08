@@ -1,5 +1,8 @@
 {
   "name": "grunt-test-sample",
   "description": "Testing the grunt-mermaid plugin",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {},
+  "private": true,
+  "readme": "This is just an usage sample"
 }
