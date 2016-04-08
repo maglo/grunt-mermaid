@@ -5,6 +5,7 @@ module.exports = function(grunt) {
         var phantomjs = require('phantomjs');
         var spawn = require('superspawn').spawn;
         var path = require('path');
+        var fs = require('fs');
 
         var options = this.options({
             extension: '.mmd',
@@ -16,7 +17,7 @@ module.exports = function(grunt) {
             phantomjs: phantomjs.path,
             css: null,
             verbose: false,
-            bin: path.resolve(path.join(__dirname, '../node_modules/mermaid/bin/mermaid.js'))
+            bin: null
         });
 
         var validateSrcAndDest = function() {
@@ -31,6 +32,46 @@ module.exports = function(grunt) {
                 options.dest = options.src;
             }
         };
+
+        var fileExists = function(filePath) {
+            try {
+                return fs.statSync(filePath).isFile();
+            } catch (err) {
+                grunt.verbose.write(err);
+                return false;
+            }
+        };
+
+        options.bin = (function () {
+            if (options.bin) {
+                if (fileExists(options.bin)) {
+                    return options.bin;
+                }
+                var msg = 'Could find phantom at specified path: ' + options.bin;
+                grunt.log.error(msg);
+                throw msg;
+            }
+
+            var checked = [];
+            var file = path.resolve(path.join(__dirname, '../node_modules/mermaid/bin/mermaid.js'));
+            checked.push(file);
+            if (fileExists(file)) {
+                return file;
+            }
+
+            file = path.resolve('node_modules/mermaid/bin/mermaid.js');
+            checked.push(file);
+            if (fileExists(file)) {
+                return file;
+            }
+
+            var msg = 'Could not find mermaid.js has been looking in ' + checked.join(' and ');
+            grunt.log.error(msg);
+            throw msg;
+        })();
+
+        grunt.verbose.ok('Found mermaid ' + options.bin);
+
 
         var done = this.async();
         var total, completed;
