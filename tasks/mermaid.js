@@ -6,6 +6,8 @@ module.exports = function(grunt) {
         var spawn = require('superspawn').spawn;
         var path = require('path');
         var fs = require('fs');
+		
+		var LineReader = require('../util/linereader.js');
 
         var options = this.options({
             extension: '.mmd',
@@ -17,7 +19,8 @@ module.exports = function(grunt) {
             phantomjs: phantomjs.path,
             css: null,
             verbose: false,
-            bin: null
+            bin: null,
+			widthText: '%% width:'
         });
 
         var validateSrcAndDest = function() {
@@ -37,7 +40,10 @@ module.exports = function(grunt) {
             try {
                 return fs.statSync(filePath).isFile();
             } catch (err) {
-                grunt.verbose.write(err);
+                if (err && (err + '').indexOf('Error: ENOENT: no such file or directory, stat') === -1) {
+                    grunt.verbose.write(err);
+                }
+
                 return false;
             }
         };
@@ -72,6 +78,28 @@ module.exports = function(grunt) {
         })();
 
         grunt.verbose.ok('Found mermaid ' + options.bin);
+		
+		var getWidthFromFile = function(filePath) {
+            try {
+                var reader = new LineReader(filePath);
+                var firstLine = reader.next().toString();
+                reader.close();
+                
+                var needle = options.widthText;
+                if(firstLine && firstLine.lastIndexOf(needle)) {
+                    var result = parseInt(firstLine.substring(needle.length + 1).trim(), 0);
+                    if(result > 0) {
+                        grunt.verbose.writelns('Found width: ' + result + ' for ' + filePath);
+                        return result;
+                    }
+                }
+            } catch(err) {
+                grunt.error.log('Could not read size from file ' + filePath + ' the error was ' + err);
+            }
+
+			return false;
+            
+		}
 
 
         var done = this.async();
@@ -94,6 +122,8 @@ module.exports = function(grunt) {
             tick();
         };
 
+        grunt.verbose.write('Using phantomjs at ' + options.phantomjs);
+
         this.files.forEach(function(fileset) {
             grunt.log.writeln('Processing ' + fileset.src.length + ' files.');
 
@@ -102,11 +132,12 @@ module.exports = function(grunt) {
 
             fileset.src.forEach(function(filePath) {
                 var outputPath = fileset.dest || path.dirname(filePath);
+				var width = getWidthFromFile(filePath) || options.width;
                 
                 var args = [filePath, '-o', outputPath];
                 if (options.png) { args.push('-p'); }
                 if (options.svg) { args.push('-s'); }
-                if (options.width) { args.push('-w'); args.push(options.width); }
+                if (width) 		 { args.push('-w'); args.push(width); }
                 if (options.css) { args.push('-t'); args.push(options.css); }
                 if (options.phantomjs) { args.push('-e'); args.push(options.phantomjs); }
 
