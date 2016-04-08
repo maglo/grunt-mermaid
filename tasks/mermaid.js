@@ -43,11 +43,12 @@ module.exports = function(grunt) {
         };
 
         options.bin = (function () {
+			var msg;
             if (options.bin) {
                 if (fileExists(options.bin)) {
                     return options.bin;
                 }
-                var msg = 'Could find phantom at specified path: ' + options.bin;
+                msg = 'Could find phantom at specified path: ' + options.bin;
                 grunt.log.error(msg);
                 throw msg;
             }
@@ -65,7 +66,7 @@ module.exports = function(grunt) {
                 return file;
             }
 
-            var msg = 'Could not find mermaid.js has been looking in ' + checked.join(' and ');
+            msg = 'Could not find mermaid.js has been looking in ' + checked.join(' and ');
             grunt.log.error(msg);
             throw msg;
         })();
