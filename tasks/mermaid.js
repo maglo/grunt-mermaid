@@ -99,7 +99,7 @@ module.exports = function(grunt) {
 
 			return false;
             
-		}
+		};
 
 
         var done = this.async();
@@ -123,6 +123,20 @@ module.exports = function(grunt) {
         };
 
         grunt.verbose.write('Using phantomjs at ' + options.phantomjs);
+		
+		var makeMermardCliArgs = function(filePath) {
+			var outputPath = fileset.dest || path.dirname(filePath);
+			var width = getWidthFromFile(filePath) || options.width;
+			
+			var args = [filePath, '-o', outputPath];
+			if (options.png) { args.push('-p'); }
+			if (options.svg) { args.push('-s'); }
+			if (width) 		 { args.push('-w'); args.push(width); }
+			if (options.css) { args.push('-t'); args.push(options.css); }
+			if (options.phantomjs) { args.push('-e'); args.push(options.phantomjs); }
+
+			return args;
+		};
 
         this.files.forEach(function(fileset) {
             grunt.log.writeln('Processing ' + fileset.src.length + ' files.');
@@ -131,16 +145,7 @@ module.exports = function(grunt) {
             completed = 0;
 
             fileset.src.forEach(function(filePath) {
-                var outputPath = fileset.dest || path.dirname(filePath);
-				var width = getWidthFromFile(filePath) || options.width;
-                
-                var args = [filePath, '-o', outputPath];
-                if (options.png) { args.push('-p'); }
-                if (options.svg) { args.push('-s'); }
-                if (width) 		 { args.push('-w'); args.push(width); }
-                if (options.css) { args.push('-t'); args.push(options.css); }
-                if (options.phantomjs) { args.push('-e'); args.push(options.phantomjs); }
-
+				var args = makeMermardCliArgs(filePath);
                 var command = [options.bin].concat(args).join(' ');
                 grunt.verbose.ok('Running ' + command);
 
