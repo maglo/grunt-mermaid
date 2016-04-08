@@ -1,6 +1,6 @@
 {
   "name": "grunt-mermaid",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Grunt plugin to generate diagram images from files based on mermaid syntax",
   "main": "index.js",
   "directories": {
