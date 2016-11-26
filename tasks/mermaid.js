@@ -2,7 +2,7 @@
 module.exports = function(grunt) {
     grunt.registerMultiTask('mermaid', function() {
 
-        var phantomjs = require('phantomjs');
+        var phantomjs = require('phantomjs-prebuilt');
         var spawn = require('superspawn').spawn;
         var path = require('path');
         var fs = require('fs');
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
             if(!options.widthText) {
                 return false;
             }
-            
+
             try {
                 var reader = new LineReader(filePath);
                 var firstLine = reader.next().toString();
